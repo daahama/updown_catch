@@ -13,7 +13,7 @@ exports.handler = async function(event, context) {
         skill = Alexa.SkillBuilders.custom()
             .addRequestHandlers(
                 LaunchRequestHandler,
-                HelloWorldIntentHandler,
+#               HelloWorldIntentHandler,
                 HelpIntentHandler,
                 CancelAndStopIntentHandler,
                 SessionEndedRequestHandler,
@@ -30,12 +30,13 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speechText = 'ようこそ、アレクサスキルキットへ。こんにちは、と言ってみてください。';
+        const speechText = 'アップアンドダウン キャッチゲームをはじめます。';
+	const repromptText = 'ゲームの説明を聞きますか？'
 
         return handlerInput.responseBuilder
             .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard('Hello World', speechText)
+            .reprompt(repromptText)
+            .withSimpleCard('Up and down catch', speechText)
             .getResponse();
     }
 };
