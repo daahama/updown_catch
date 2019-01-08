@@ -14,6 +14,7 @@ exports.handler = async function(event, context) {
             .addRequestHandlers(
                 LaunchRequestHandler,
                 RuleExplanationHandler,
+                RuleExplanation2Handler,
                 HelpIntentHandler,
                 CancelAndStopIntentHandler,
                 SessionEndedRequestHandler,
