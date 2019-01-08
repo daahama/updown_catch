@@ -14,7 +14,7 @@ exports.handler = async function(event, context) {
             .addRequestHandlers(
                 LaunchRequestHandler,
                 RuleExplanationHandler,
-                RuleExplanation2Handler,
+                NextExplanationHandler,
                 HelpIntentHandler,
                 CancelAndStopIntentHandler,
                 SessionEndedRequestHandler,
@@ -56,7 +56,7 @@ const RuleExplanationHandler = {
     }
 };
 
-const RuleExplanation2Handler = {
+const NextExplanationHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
             handlerInput.requestEnvelope.request.intent.name === 'RuleExplanation2Intent';
