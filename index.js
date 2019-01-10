@@ -13,7 +13,8 @@ exports.handler = async function(event, context) {
         skill = Alexa.SkillBuilders.custom()
             .addRequestHandlers(
                 LaunchRequestHandler,
-                HelloWorldIntentHandler,
+                RuleExplanationHandler,
+                NextExplanationHandler,
                 HelpIntentHandler,
                 CancelAndStopIntentHandler,
                 SessionEndedRequestHandler,
@@ -30,27 +31,43 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speechText = 'ようこそ、アレクサスキルキットへ。こんにちは、と言ってみてください。';
+        const speechText = 'アップアンドダウン キャッチゲームをはじめます。ゲームの説明を聞く場合は「ゲーム説明をして」と言ってください。すぐにゲームをする場合は「ゲームを始める」と言ってください。'
 
         return handlerInput.responseBuilder
             .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard('Hello World', speechText)
+            .reprompt()
+            .withSimpleCard('Up and down catch', speechText)
             .getResponse();
     }
 };
 
-const HelloWorldIntentHandler = {
+const RuleExplanationHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-            handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
+            handlerInput.requestEnvelope.request.intent.name === 'RuleExplanationIntent';
     },
     handle(handlerInput) {
-        const speechText = 'こんにちは';
+        const speechText = 'このゲームは二人以上でやるゲームです。はじめに、二人以上で円形にならんでください。次に、それぞれの右手の人差し指と親指で輪っかを作ってください。最後に、左手の人差し指をしたに向けて左どなりの人の輪っかの中にいれてください。これで準備完了です。次の説明に進んでもよろしいですか？良い場合は「次の説明をして」と言ってください。この説明をもう一度聞く場合は「ルール説明をして」と言ってください。';
 
         return handlerInput.responseBuilder
             .speak(speechText)
-            .withSimpleCard('Hello World', speechText)
+            .reprompt()
+            .withSimpleCard('Up and down catch', speechText)
+            .getResponse();
+    }
+};
+
+const NextExplanationHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
+            handlerInput.requestEnvelope.request.intent.name === 'RuleExplanationIntent';
+    },
+    handle(handlerInput) {
+        const speechText = '私が「アップ」と言ったら人差し指を上にあげ、輪っかからだしてください。私が「ダウン」と言ったら人差し指を輪っかの中におろしてください。私が「キャッチ」と言ったら、輪っかの中にある隣の人の指を掴んでください。同時に自分の指が捕まらない様に上に上げてください。隣の人の指を掴み、自分の指が逃げることができた人が勝ちとなります。また、「キャッチ」以外の言葉で逃げたり、捕まえたりしてはいけません。説明は終わりです。ゲームを始める場合は「ゲームを始める」と言ってください。もう一度説明を聞く場合は「ゲーム説明をして」と言ってください。';
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt()
+            .withSimpleCard('Up and down catch', speechText)
             .getResponse();
     }
 };
